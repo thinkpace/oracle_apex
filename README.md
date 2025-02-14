@@ -41,4 +41,4 @@ docker compose up -d
 
 in setup directory.
 
-You can verfiy successfull startup by connecting to sqlplus client using `[sqlplus_connect.sh](/ansible/roles/install-oracle/templates/sqlplus_connect.sh.j2)`.
+You can verfiy successfull startup by connecting to sqlplus client using [sqlplus_connect.sh](/ansible/roles/install-oracle/templates/sqlplus_connect.sh.j2).
