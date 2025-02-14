@@ -1,0 +1,63 @@
+---
+- name: Create installation directory
+  file:
+    path: '{{ oracle_path }}'
+    state: directory
+    owner: '{{ oracle_user }}'
+    group: '{{ oracle_group }}'
+    mode: 0775
+- name: Create volumes directory
+  file:
+    path: '{{ oracle_volumes_root }}'
+    state: directory
+    owner: '{{ oracle_user }}'
+    group: '{{ oracle_group }}'
+    mode: 0770
+- name: Create Oracle DB directory
+  file:
+    path: '{{ oracle_volumes_root }}/db'
+    state: directory
+    owner: '{{ oracle_user }}'
+    group: '{{ oracle_group }}'
+    mode: 0777
+- name: Create Oracle ORDS directory
+  file:
+    path: '{{ oracle_volumes_root }}/ords'
+    state: directory
+    owner: '{{ oracle_user }}'
+    group: '{{ oracle_group }}'
+    mode: 0777
+- name: Get oracle user info
+  ansible.builtin.getent:
+    database: passwd
+    key: '{{ oracle_user }}'
+- name: Copy docker-compose.yml
+  ansible.builtin.template:
+    src: docker-compose.yml.j2
+    dest: '{{ oracle_path }}/docker-compose.yml'
+    owner: root
+    group: root
+    mode: 0664
+  vars:
+    oracle_user_id: '{{ ansible_facts.getent_passwd[oracle_user][1] }}'
+    oracle_group_id: '{{ ansible_facts.getent_passwd[oracle_group][1] }}'
+#- name: Copy conn_string.txt
+#  ansible.builtin.template:
+#    src: conn_string.txt.j2
+#    dest: '{{ oracle_volumes_root }}/ords/conn_string.txt'
+#    owner: '{{ oracle_user_id }}'
+#    group: '{{ oracle_group_id }}'
+#    mode: 0770
+#  vars:
+#    oracle_user_id: '{{ ansible_facts.getent_passwd[oracle_user][1] }}'
+#    oracle_group_id: '{{ ansible_facts.getent_passwd[oracle_group][1] }}'
+- name: Copy sqlplus_connect.sh
+  ansible.builtin.template:
+    src: sqlplus_connect.sh.j2
+    dest: '{{ oracle_path }}/sqlplus_connect.sh'
+    owner: root
+    group: root
+    mode: 0771
+  vars:
+    oracle_user_id: '{{ ansible_facts.getent_passwd[oracle_user][1] }}'
+    oracle_group_id: '{{ ansible_facts.getent_passwd[oracle_group][1] }}'

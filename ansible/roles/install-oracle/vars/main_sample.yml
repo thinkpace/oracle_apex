@@ -1,0 +1,9 @@
+---
+oracle_path: '/opt/oracle'
+oracle_volumes_root: '/path/to/my/oracle/volumes/directory'
+oracle_url: 'MY_ORACLE_URL'
+oracle_db_port: '1521'
+oracle_ords_port: '8181'
+oracle_user: 'root'
+oracle_group: 'root'
+oracle_pwd: 'THISISMYSUPERSECRETPASSWORDDONTSHAREIT'

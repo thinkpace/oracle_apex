@@ -1,0 +1,27 @@
+services:
+  oracle-db:
+    image: container-registry.oracle.com/database/free:latest
+    container_name: oracle-db
+    #user: {{ oracle_user_id }}:{{ oracle_group_id }}
+    restart: unless-stopped
+    hostname: oracle-db
+    environment:
+      - 'ORACLE_PWD={{ oracle_pwd }}'
+    ports:
+      - '{{ oracle_db_port }}:1521'
+    volumes:
+      - '{{ oracle_volumes_root }}/db:/opt/oracle/oradata'
+
+  oracle-ords:
+    image: container-registry.oracle.com/database/ords-developer:latest
+    container_name: oracle-ords
+    user: {{ oracle_user_id }}:{{ oracle_group_id }}
+    restart: unless-stopped
+    hostname: oracle-ords
+    ports:
+      - '{{ oracle_ords_port }}:8181'
+    volumes:
+      - '{{ oracle_volumes_root }}/ords:/opt/oracle/variables'
+    depends_on:
+      oracle-db:
+        condition: service_healthy
