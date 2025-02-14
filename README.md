@@ -29,7 +29,7 @@ To execute this Ansible playbook, you can use following command:
 ansible-playbook -i /PATH/TO/INVENTORY /YOUR/REPO/CHECKOUT/PATH/ansible/ansible_playbook.yml
 ```
 
-Open `roles/install-oracle/tasks/main.yml` in your prefered editor and comment `Copy conn_string.txt` again.
+Open `roles/install-oracle/tasks/main.yml` in your prefered editor and add comment for `Copy conn_string.txt` again.
 
 ## Start
 
